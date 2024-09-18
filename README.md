@@ -45,4 +45,5 @@ side_web_APIs/Manipulating_documents
 2. https://www.freecodecamp.org/news/the-javascript-dom-manipulation-handbook/
 
 Prompt 2
+
 Also I need to add a logo for places travelled to the navigation bar
