@@ -542,85 +542,93 @@
       </div>
     </section>
     
-    <script>
-      // Array holding your recent project information, including extra details for the card-reveal
-      const projects = [
-        {
-          title: "Wordle Solver Bot",
-          description: "A solving bot in Python",
-          img: "/assets/img/wordle-logo.png",
-          extraInfo: `
-            <ul>
-              <li><b>Tools:</b> Python, Django, HTML, CSS</li>
-              <li>Developed a bot that solves Wordle puzzles efficiently.</li>
-              <li>Deployed the bot using Heroku and used OAuth for user authentication.</li>
-            </ul>`
-        },
-        {
-          title: "Pathfinding Visualizer",
-          description: "A visualizer for different pathfinding algorithms",
-          img: "/assets/img/pathfinder.jpg",
-          extraInfo: `
-            <ul>
-              <li><b>Tools:</b> React, JavaScript, HTML5, CSS3</li>
-              <li>Visualizes algorithms like Dijkstra, A*, and BFS.</li>
-              <li>Users can interactively explore how pathfinding algorithms work.</li>
-            </ul>`
-        },
-        {
-          title: "Local Library Web-App",
-          description: "An online catalog for a small local library",
-          img: "/assets/img/project-library-logo.png",
-          extraInfo: `
-            <ul>
-              <li><b>Tools:</b> Django, SQLite, Heroku</li>
-              <li>Allows users to manage and browse books online.</li>
-              <li>Supports user authentication and administration of book data.</li>
-            </ul>`
-        }
-      ];
+  <script>
+  // Array holding your recent project information, now including dates for sorting
+  const projects = [
+    {
+      title: "Wordle Solver Bot",
+      description: "A solving bot in Python",
+      img: "/assets/img/wordle-logo.png",
+      extraInfo: `
+        <ul>
+          <li><b>Tools:</b> Python, Django, HTML, CSS</li>
+          <li>Developed a bot that solves Wordle puzzles efficiently.</li>
+          <li>Deployed the bot using Heroku and used OAuth for user authentication.</li>
+        </ul>`,
+      date: new Date('2023-07-10')
+    },
+    {
+      title: "Pathfinding Visualizer",
+      description: "A visualizer for different pathfinding algorithms",
+      img: "/assets/img/pathfinder.jpg",
+      extraInfo: `
+        <ul>
+          <li><b>Tools:</b> React, JavaScript, HTML5, CSS3</li>
+          <li>Visualizes algorithms like Dijkstra, A*, and BFS.</li>
+          <li>Users can interactively explore how pathfinding algorithms work.</li>
+        </ul>`,
+      date: new Date('2023-11-05')
+    },
+    {
+      title: "Local Library Web-App",
+      description: "An online catalog for a small local library",
+      img: "/assets/img/project-library-logo.png",
+      extraInfo: `
+        <ul>
+          <li><b>Tools:</b> Django, SQLite, Heroku</li>
+          <li>Allows users to manage and browse books online.</li>
+          <li>Supports user authentication and administration of book data.</li>
+        </ul>`,
+      date: new Date('2023-03-20')
+    }
+  ];
+
+  // Sort projects by date (most recent first)
+  projects.sort((a, b) => b.date - a.date);
+
+  let displayedProjects = 1; // Initially display only one project
+
+  // Function to generate and display projects
+  function displayProjects(limit) {
+    const recentProjectsDiv = document.getElementById("recent-projects");
+    recentProjectsDiv.innerHTML = ""; // Clear existing content
     
-      let displayedProjects = 1; // Control how many projects are displayed initially
-    
-      // Function to generate and display project HTML with reveal functionality
-      function displayProjects(limit) {
-        const recentProjectsDiv = document.getElementById("recent-projects");
-        recentProjectsDiv.innerHTML = ""; // Clear the content before injecting
-        for (let i = 0; i < limit && i < projects.length; i++) {
-          const project = projects[i];
-          const projectHTML = `
-            <div class="col s12 m6 l4">
-              <div class="card medium">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img src="${project.img}" alt="${project.title}" style="height: 100%; width: 100%" class="activator" />
-                </div>
-                <div class="card-content">
-                  <span class="card-title activator teal-text hoverline">${project.title}<i class="mdi-navigation-more-vert right"></i></span>
-                  <p>${project.description}</p>
-                </div>
-                <div class="card-reveal">
-                  <span class="card-title grey-text text-darken-4">${project.title}<i class="mdi-navigation-close right"></i></span>
-                  ${project.extraInfo}
-                </div>
-              </div>
+    // Generate project cards up to the given limit
+    for (let i = 0; i < limit && i < projects.length; i++) {
+      const project = projects[i];
+      const projectHTML = `
+        <div class="col s12 m6 l4">
+          <div class="card medium">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img src="${project.img}" alt="${project.title}" style="height: 100%; width: 100%" class="activator" />
             </div>
-          `;
-          recentProjectsDiv.innerHTML += projectHTML;
-        }
-      }
-    
-      // Load more function for the button
-      document.getElementById('load-more-btn').addEventListener('click', function() {
-        displayedProjects += 1;  // Increase the number of displayed projects
-        displayProjects(displayedProjects);  // Re-render the projects
-        if (displayedProjects >= projects.length) {
-          this.style.display = 'none';  // Hide the button if no more projects
-        }
-      });
-    
-      // Initially display the first project
-      displayProjects(displayedProjects);
-    </script>
+            <div class="card-content">
+              <span class="card-title activator teal-text hoverline">${project.title}<i class="mdi-navigation-more-vert right"></i></span>
+              <p>${project.description}</p>
+              <p><small>Date: ${project.date.toDateString()}</small></p> <!-- Display the project date -->
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4">${project.title}<i class="mdi-navigation-close right"></i></span>
+              ${project.extraInfo}
+            </div>
+          </div>
+        </div>
+      `;
+      recentProjectsDiv.innerHTML += projectHTML;
+    }
+  }
+
+  // Load more function for the button
+  document.getElementById('load-more-btn').addEventListener('click', function() {
+    displayedProjects = projects.length;  // After clicking, display all projects
+    displayProjects(displayedProjects);  // Re-render with all projects
+    this.style.display = 'none';  // Hide the button after clicking once
+  });
+
+  // Initially display the first project
+  displayProjects(displayedProjects);
+</script>
+
     
 
     <!-- Fifth Section: Skills -->
