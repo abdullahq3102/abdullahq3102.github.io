@@ -543,29 +543,65 @@
     </section>
     
     <script>
-      // Array holding your recent project information
+      // Array holding your recent project information, including extra details for the card-reveal
       const projects = [
-        { title: "Wordle Solver Bot", description: "A solving bot in Python", img: "/assets/img/wordle-logo.png" },
-        { title: "Pathfinding Visualizer", description: "A visualizer for different pathfinding algorithms", img: "/assets/img/pathfinder.jpg" },
-        { title: "Local Library Web-App", description: "An online catalog for a small local library", img: "/assets/img/project-library-logo.png" }
+        {
+          title: "Wordle Solver Bot",
+          description: "A solving bot in Python",
+          img: "/assets/img/wordle-logo.png",
+          extraInfo: `
+            <ul>
+              <li><b>Tools:</b> Python, Django, HTML, CSS</li>
+              <li>Developed a bot that solves Wordle puzzles efficiently.</li>
+              <li>Deployed the bot using Heroku and used OAuth for user authentication.</li>
+            </ul>`
+        },
+        {
+          title: "Pathfinding Visualizer",
+          description: "A visualizer for different pathfinding algorithms",
+          img: "/assets/img/pathfinder.jpg",
+          extraInfo: `
+            <ul>
+              <li><b>Tools:</b> React, JavaScript, HTML5, CSS3</li>
+              <li>Visualizes algorithms like Dijkstra, A*, and BFS.</li>
+              <li>Users can interactively explore how pathfinding algorithms work.</li>
+            </ul>`
+        },
+        {
+          title: "Local Library Web-App",
+          description: "An online catalog for a small local library",
+          img: "/assets/img/project-library-logo.png",
+          extraInfo: `
+            <ul>
+              <li><b>Tools:</b> Django, SQLite, Heroku</li>
+              <li>Allows users to manage and browse books online.</li>
+              <li>Supports user authentication and administration of book data.</li>
+            </ul>`
+        }
       ];
     
-      let displayedProjects = 1;  // Control how many projects are displayed initially
+      let displayedProjects = 1; // Control how many projects are displayed initially
     
-      // Function to generate and display project HTML
+      // Function to generate and display project HTML with reveal functionality
       function displayProjects(limit) {
         const recentProjectsDiv = document.getElementById("recent-projects");
-        recentProjectsDiv.innerHTML = "";  // Clear the content before injecting
+        recentProjectsDiv.innerHTML = ""; // Clear the content before injecting
         for (let i = 0; i < limit && i < projects.length; i++) {
           const project = projects[i];
           const projectHTML = `
-            <div class="card medium">
-              <div class="card-image">
-                <img src="${project.img}" alt="${project.title}">
-              </div>
-              <div class="card-content">
-                <span class="card-title teal-text">${project.title}</span>
-                <p>${project.description}</p>
+            <div class="col s12 m6 l4">
+              <div class="card medium">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img src="${project.img}" alt="${project.title}" style="height: 100%; width: 100%" class="activator" />
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator teal-text hoverline">${project.title}<i class="mdi-navigation-more-vert right"></i></span>
+                  <p>${project.description}</p>
+                </div>
+                <div class="card-reveal">
+                  <span class="card-title grey-text text-darken-4">${project.title}<i class="mdi-navigation-close right"></i></span>
+                  ${project.extraInfo}
+                </div>
               </div>
             </div>
           `;
@@ -585,6 +621,7 @@
       // Initially display the first project
       displayProjects(displayedProjects);
     </script>
+    
 
     <!-- Fifth Section: Skills -->
     <section id="skills" class="section scrollspy">
