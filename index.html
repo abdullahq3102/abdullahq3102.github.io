@@ -542,7 +542,7 @@
       </div>
     </section>
     
-  <script>
+<script>
   // Array holding your recent project information, now including dates for sorting
   const projects = [
     {
@@ -588,11 +588,14 @@
 
   let displayedProjects = 1; // Initially display only one project
 
-  // Function to generate and display projects
+  // Function to generate and display projects with proper row/column layout
   function displayProjects(limit) {
     const recentProjectsDiv = document.getElementById("recent-projects");
     recentProjectsDiv.innerHTML = ""; // Clear existing content
     
+    let rowDiv = document.createElement('div');
+    rowDiv.classList.add('row'); // Add row class for proper layout
+
     // Generate project cards up to the given limit
     for (let i = 0; i < limit && i < projects.length; i++) {
       const project = projects[i];
@@ -614,8 +617,9 @@
           </div>
         </div>
       `;
-      recentProjectsDiv.innerHTML += projectHTML;
+      rowDiv.innerHTML += projectHTML;
     }
+    recentProjectsDiv.appendChild(rowDiv); // Add the row div to the projects section
   }
 
   // Load more function for the button
