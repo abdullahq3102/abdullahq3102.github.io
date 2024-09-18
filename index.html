@@ -408,7 +408,7 @@
     </section>
 
     <!-- Fourth Section: Projects -->
-    <section id="projects" class="section scrollspy">
+    <!-- <section id="projects" class="section scrollspy">
       <h3 class="page-title white-text teal">Projects</h3>
       <div class="container">
         <div class="row">
@@ -426,8 +426,6 @@
                 </p>
               </div>
               <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
                 <span class="card-title grey-text"><small>Accomplishments</small><i
                     class="mdi-navigation-close right"></i></span>
                 <ul>
@@ -462,8 +460,6 @@
                 </p>
               </div>
               <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
                 <span class="card-title grey-text"><small>Accomplishments</small><i
                     class="mdi-navigation-close right"></i></span>
                 <ul>
@@ -486,7 +482,6 @@
             </div>
           </div>
 
-          <!-- 1. Django Project -->
           <div class="col s12 m6 l6">
             <div class="card medium">
               <div class="card-image waves-effect waves-block waves-light">
@@ -524,8 +519,60 @@
 
         </div>
       </div>
-    </section>
+    </section> -->
 
+    <section id="projects" class="section scrollspy">
+      <h3 class="page-title white-text teal">Projects</h3>
+      <div class="container">
+        <div id="recent-projects"></div>
+        <button id="load-more-btn" class="waves-effect waves-light btn">Load More</button>
+      </div>
+    </section>
+    
+    <script>
+      // Array holding your recent project information
+      const projects = [
+        { title: "Wordle Solver Bot", description: "A solving bot in Python", img: "/assets/img/wordle-logo.png" },
+        { title: "Pathfinding Visualizer", description: "A visualizer for different pathfinding algorithms", img: "/assets/img/pathfinder.jpg" },
+        { title: "Local Library Web-App", description: "An online catalog for a small local library", img: "/assets/img/project-library-logo.png" }
+      ];
+    
+      let displayedProjects = 1;  // Control how many projects are displayed initially
+    
+      // Function to generate and display project HTML
+      function displayProjects(limit) {
+        const recentProjectsDiv = document.getElementById("recent-projects");
+        recentProjectsDiv.innerHTML = "";  // Clear the content before injecting
+        for (let i = 0; i < limit && i < projects.length; i++) {
+          const project = projects[i];
+          const projectHTML = `
+            <div class="card medium">
+              <div class="card-image">
+                <img src="${project.img}" alt="${project.title}">
+              </div>
+              <div class="card-content">
+                <span class="card-title teal-text">${project.title}</span>
+                <p>${project.description}</p>
+              </div>
+            </div>
+          `;
+          recentProjectsDiv.innerHTML += projectHTML;
+        }
+      }
+    
+      // Load more function for the button
+      document.getElementById('load-more-btn').addEventListener('click', function() {
+        displayedProjects += 1;  // Increase the number of displayed projects
+        displayProjects(displayedProjects);  // Re-render the projects
+        if (displayedProjects >= projects.length) {
+          this.style.display = 'none';  // Hide the button if no more projects
+        }
+      });
+    
+      // Initially display the first project
+      displayProjects(displayedProjects);
+    </script>
+    
 
 
     <section id="Places travelled" class="section scrollspy"></section>
